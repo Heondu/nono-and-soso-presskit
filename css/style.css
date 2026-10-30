@@ -1,27 +1,32 @@
-@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Fredoka:wght@400;500;600;700&family=Noto+Sans+KR:wght@400;500;700&display=swap');
 
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
 :root {
   --max-w: 820px;
-  --bg: #fafaf7;
-  --text: #1a1a1a;
-  --text-sub: #444;
-  --text-muted: #888;
-  --border: #ddd;
-  --link: #0066cc;
-  --th-bg: #f2f2ee;
+  --page-bg: #a3aaba;
+  --bg: #f3f5fe;
+  --text: #454b5a;
+  --text-sub: #5a6070;
+  --text-muted: #8a90a0;
+  --border: #b3bef0;
+  --link: #fe509a;
+  --th-bg: #dadce5;
+  --accent-shadow: #e83a84;
+  --heading: #1b1d45;
+  --radius: 16px;
 }
 
 html { scroll-behavior: smooth; }
 
 body {
-  font-family: 'Noto Sans KR', 'Malgun Gothic', sans-serif;
+  font-family: 'Fredoka', 'Noto Sans KR', 'Malgun Gothic', sans-serif;
   font-size: 15px;
   line-height: 1.8;
   color: var(--text);
-  background: var(--bg);
+  background: var(--page-bg) url('../assets/pages/bg_particles_tile_round.png') repeat 50% 0;
 }
+::selection { color: #fff; background: var(--link); }
 
 a { color: var(--link); text-decoration: underline; }
 a:hover { opacity: 0.75; }
@@ -38,6 +43,9 @@ strong { font-weight: 700; }
   position: sticky;
   top: 0;
   background: var(--bg);
+  max-width: var(--max-w);
+  margin: 32px auto 0;
+  border-radius: var(--radius) var(--radius) 0 0;
   z-index: 100;
 }
 .header-inner {
@@ -47,7 +55,8 @@ strong { font-weight: 700; }
   align-items: center;
   justify-content: space-between;
 }
-.site-logo { height: 40px; width: auto; }
+/* 로고 원본은 위아래 여백이 큰 정사각형이라 cover로 글자 부분만 남긴다 */
+.site-logo { height: 56px; width: 90px; object-fit: cover; }
 .lang-switch {
   display: flex;
   align-items: center;
@@ -72,46 +81,29 @@ strong { font-weight: 700; }
   max-width: var(--max-w);
   margin: 0 auto;
   padding: 40px 24px 80px;
+  background: var(--bg);
 }
-
-/* ── HERO IMAGE ── */
-.hero-img-wrap { margin-bottom: 36px; }
-.hero-img { width: 100%; border-radius: 4px; }
-
-/* ── TOC ── */
-.toc { margin-bottom: 32px; }
-.toc ul {
-  list-style: none;
-  padding: 0;
-  display: flex;
-  flex-wrap: wrap;
-  gap: 0;
-}
-.toc ul li::after {
-  content: ' · ';
-  color: var(--text-muted);
-  margin: 0 4px;
-}
-.toc ul li:last-child::after { content: ''; }
-.toc a { color: var(--link); font-size: 15px; }
 
 /* ── DIVIDER ── */
 hr {
   border: none;
-  border-top: 1px solid var(--border);
-  margin: 36px 0;
+  height: 8px;
+  margin: 40px 0;
+  background: radial-gradient(circle, var(--border) 3px, transparent 3.5px) 0 0 / 20px 8px repeat-x;
 }
 
 /* ── HEADINGS ── */
 h2 {
-  font-size: 24px;
+  font-size: 26px;
   font-weight: 700;
+  color: var(--heading);
   margin-bottom: 16px;
 }
 h3 {
   font-size: 19px;
   font-weight: 700;
-  margin: 20px 0 8px;
+  color: var(--heading);
+  margin: 28px 0 8px;
 }
 
 blockquote {
@@ -151,7 +143,7 @@ blockquote {
   height: 0;
   overflow: hidden;
   margin-bottom: 28px;
-  border-radius: 4px;
+  border-radius: 12px;
   background: #000;
 }
 .video-wrap iframe {
@@ -169,9 +161,11 @@ blockquote {
   margin-bottom: 1em;
 }
 .gif-grid figure { margin: 0; }
+/* 한 장짜리는 2열 그리드의 한 칸과 같은 크기로 가운데 정렬 */
+.gif-grid.single { grid-template-columns: calc(50% - 6px); justify-content: center; }
 .gif-grid img {
   width: 100%;
-  border-radius: 3px;
+  border-radius: 12px;
   border: 1px solid var(--border);
 }
 .gif-grid figcaption {
@@ -180,6 +174,30 @@ blockquote {
   margin-top: 4px;
   text-align: center;
 }
+
+/* ── LANGUAGE CHIPS ── */
+.chip {
+  display: inline-block;
+  padding: 0 10px;
+  margin: 2px 4px 2px 0;
+  font-size: 13px;
+  line-height: 24px;
+  border-radius: 12px;
+  background: var(--th-bg);
+}
+
+/* ── BUTTON ── */
+.btn {
+  display: inline-block;
+  padding: 8px 20px;
+  border-radius: 999px;
+  background: var(--link);
+  color: #fff;
+  font-weight: 600;
+  text-decoration: none;
+  box-shadow: 0 3px 0 var(--accent-shadow);
+}
+.btn:hover { opacity: 1; filter: brightness(1.05); }
 
 /* ── SCREENSHOT GRID ── */
 .screenshot-grid {
@@ -193,7 +211,7 @@ blockquote {
   width: 100%;
   aspect-ratio: 16/9;
   object-fit: cover;
-  border-radius: 3px;
+  border-radius: 12px;
   border: 1px solid var(--border);
   transition: opacity 0.15s;
 }
@@ -211,12 +229,15 @@ blockquote {
   font-size: 14px;
   color: var(--text-muted);
   background: var(--bg);
+  max-width: var(--max-w);
+  margin: 0 auto 40px;
+  border-radius: 0 0 var(--radius) var(--radius);
 }
 
 /* ── RESPONSIVE ── */
 @media (max-width: 600px) {
-  .gif-grid { grid-template-columns: 1fr; }
+  .gif-grid, .gif-grid.single { grid-template-columns: 1fr; }
   .screenshot-grid { grid-template-columns: repeat(2, 1fr); }
-  .toc ul { flex-direction: column; gap: 4px; }
-  .toc ul li::after { content: ''; }
+  .site-header { margin-top: 0; border-radius: 0; }
+  .site-footer { margin-bottom: 0; border-radius: 0; }
 }
